@@ -1,0 +1,178 @@
+.u-section-1 .u-sheet-1 {
+  min-height: 177px;
+}
+
+.u-section-1 .u-text-1 {
+  font-weight: 900;
+  margin: 60px auto;
+}.u-section-2 .u-sheet-1 {
+  min-height: 129px;
+}
+
+.u-section-2 .u-text-1 {
+  width: 803px;
+  font-size: 1.125rem;
+  margin: 50px auto -41px;
+}
+
+@media (max-width: 991px) {
+  .u-section-2 .u-text-1 {
+    width: 720px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-section-2 .u-text-1 {
+    width: 540px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-2 .u-text-1 {
+    width: 340px;
+  }
+}.u-section-3 .u-sheet-1 {
+  min-height: 235px;
+}
+
+.u-section-3 .u-countdown-1 {
+  transition-duration: 1s;
+  transform: translateX(0px) translateY(0px) scale(1) rotate(0deg);
+  text-shadow: 0px 0px 0px rgba(0,0,0,0);
+  box-shadow: -2px 0 0 0 rgba(0,0,0,0);
+  --animation-custom_in-translate_x: 0px;
+  --animation-custom_in-translate_y: 0px;
+  --animation-custom_in-opacity: 0;
+  --animation-custom_in-rotate: 0deg;
+  --animation-custom_in-scale: 0.3;
+  margin: 49px auto;
+  padding: 6px 14px;
+}
+
+.u-section-3 .u-countdown-counter-1 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-1 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-separator-1 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-counter-2 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-separator-2 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-counter-3 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-separator-3 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-counter-4 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-separator-4 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-counter-5 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-5 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-separator-5 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-counter-6 {
+  font-weight: 700;
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.u-section-3 .u-countdown-label-6 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.u-section-3 .u-countdown-1,
+.u-section-3 .u-countdown-1:before,
+.u-section-3 .u-countdown-1 > .u-container-layout:before {
+  transition-property: fill, color, background-color, stroke-width, border-style, border-width, border-top-width, border-left-width, border-right-width, border-bottom-width, custom-border, borders, box-shadow, text-shadow, opacity, border-radius, stroke, border-color, font-size, font-style, font-weight, text-decoration, letter-spacing, transform, background-image, image-zoom, background-size, background-position;
+}
+
+.u-section-3 .u-countdown-1.u-countdown-1.u-countdown-1:hover {
+  transform: scale(1.5) translateX(0px) translateY(0px) !important;
+  text-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+}
+
+.u-section-3 .u-countdown-1 {
+  border-color: transparent !important;
+}
+
+.u-section-3 .u-countdown-1.u-countdown-1.u-countdown-1.hover {
+  transform: scale(1.5) translateX(0px) translateY(0px) !important;
+  text-shadow: 0px 0px 0px rgba(0,0,0,0) !important;
+}
+
+.u-section-3 .u-countdown-1 {
+  border-color: transparent !important;
+}
+
+.u-section-3 .u-container-layout:hover .u-countdown-1 {
+  transform: rotate(0deg) scale(1) translateX(0px) translateY(0px) !important;
+}
+
+.u-container-layout.hover .u-section-3 .u-countdown-1 {
+  transform: rotate(0deg) scale(1) translateX(0px) translateY(0px) !important;
+}
