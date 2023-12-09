@@ -285,7 +285,7 @@ content {
 }
 
 .projects {
-  margin-bottom: -250px;
+  margin-bottom: -330px;
 }
 
 .game, .project {
@@ -302,7 +302,7 @@ content {
 }
 
 .project {
-  margin-bottom: 270px;
+  margin-bottom: 350px;
 }
 
 .game:hover, .project:hover {
