@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Voltseon - Pokédex</title>
+      <link rel="stylesheet" href="assets/css/style.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arbutus+Slab">
+      <link rel="icon" href="assets/images/logo.png" type="image/png">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="background"></div>
+    <header>
+      <a href="#home">
+        <img src="assets/images/logo.png" alt="Voltseon Logo" class="logo">
+      </a>
+    </header>
+    <content>
+      <h1>Gen 3 Living Dex</h1>
+      <script>
+        if (!localStorage.getItem("currentBox") instanceof Array) {
+          localStorage.setItem("currentBox", JSON.stringify([0, "Box 1"]));
+        };
+        var box = JSON.parse(localStorage.getItem("currentBox"));
+        document.write("<p>Current box: " + box[1] + "</p>");
+      </script>
+    </content>
+    <footer>
+      <div class="blur"></div>
+      <p>© 2023 Voltseon</p>
+    </footer>
+  </body>
+</html>
