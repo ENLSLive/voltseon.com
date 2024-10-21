@@ -276,7 +276,7 @@ content {
   padding: 0;
 }
 
-.games, .projects, .socials, .about, .contact {
+.games, .projects, .socials {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
@@ -366,7 +366,7 @@ content {
     margin-bottom: 50px;
   }
 
-  .games, .projects, .socials, .about, .contact {
+  .games, .projects, .socials, .about {
     transition: linear 0.1s all;
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 20px;
