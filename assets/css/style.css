@@ -213,6 +213,12 @@ button:hover {
   transition: linear 0.1s all;
 }
 
+.textgroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 headerbar {
   color: var(--main-color);
   display: flex;
@@ -366,7 +372,7 @@ content {
     margin-bottom: 50px;
   }
 
-  .games, .projects, .socials, .about {
+  .games, .projects, .socials {
     transition: linear 0.1s all;
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 20px;
