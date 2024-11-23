@@ -1,6 +1,8 @@
 import json, struct, sys, os
 from operator import xor
 
+from util import *
+
 CHAR_MAP = { 0x00: " ", 0x1B: "é", 0xBB: "A", 0xD5: "a", 0xA1: "0", 0xBC: "B", 0xD6: "b", 0xA2: "1", 0xBD: "C", 0xD7: "c", 0xA3: "2", 0xBE: "D", 0xD8: "d", 0xA4: "3", 0xBF: "E", 0xD9: "e", 0xA5: "4", 0xC0: "F", 0xDA: "f", 0xA6: "5", 0xC1: "G", 0xDB: "g", 0xA7: "6", 0xC2: "H", 0xDC: "h", 0xA8: "7", 0xC3: "I", 0xDD: "i", 0xA9: "8", 0xC4: "J", 0xDE: "j", 0xAA: "9", 0xC5: "K", 0xDF: "k", 0xAB: "!", 0xC6: "L", 0xE0: "l", 0xAC: "?", 0xC7: "M", 0xE1: "m", 0xAD: ".", 0xC8: "N", 0xE2: "n", 0xAE: "-", 0xC9: "O", 0xE3: "o", 0xAF: "·", 0xCA: "P", 0xE4: "p", 0xB0: "…", 0xCB: "Q", 0xE5: "q", 0xB1: "“", 0xCC: "R", 0xE6: "r", 0xB2: "”", 0xCD: "S", 0xE7: "s", 0xB3: "‘", 0xCE: "T", 0xE8: "t", 0xB4: "’", 0xCF: "U", 0xE9: "u", 0xB5: "♂", 0xD0: "V", 0xEA: "v", 0xB6: "♀", 0xD1: "W", 0xEB: "w", 0xB7: "$", 0xD2: "X", 0xEC: "x", 0xB8: ",", 0xD3: "Y", 0xED: "y", 0xB9: "×", 0xD4: "Z", 0xEE: "z", 0xBA: "/" }
 
 def readstring(bytes):
@@ -91,19 +93,98 @@ class PokemonBoxData:
     return f'<PokemonBoxData current_box={self.current_box} pokemon_data={self.get_all_pokemon()} box_names={self.get_all_box_names()} box_wallpapers={len(self.box_wallpapers)}>'
   
 class Pokemon:
-  def __init__(self, personality_value, original_trainer_id, nickname):
-    self.personality_value = personality_value
-    self.original_trainer_id = original_trainer_id
+  def __init__(self, personality_value, original_trainer_id, nickname, language, ot_name, markings, checksum, org_data, status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense):
+    self.personality_value = to_hex(personality_value)
+    self.secret_id, self.original_trainer_id = split_bits(original_trainer_id)
+    key = personality_value ^ self.original_trainer_id ^ (self.secret_id << 16)
     self.nickname = nickname
+    self.language = language
+    self.ot_name = ot_name
+    self.markings = MARK_TABLE[markings]
+    self.checksum = checksum
+    
+    if personality_value == 0:
+      return
+
+    data = bytearray()
+    for i in range(12):
+      dec = struct.unpack('<I', org_data[i*4:i*4+4])[0]
+      dec ^= key
+      data.append(dec & 0xFF)
+      data.append((dec >> 8) & 0xFF)
+      data.append((dec >> 16) & 0xFF)
+      data.append((dec >> 24) & 0xFF)
+    
+    shuffle_val = personality_value % 24
+    funcs = [self.read_growth, self.read_moves, self.read_evs, self.read_misc]
+
+    # First function call
+    funcs[shuffle_val // 6](data[0:12])
+
+    # Remove the called function and shift others left
+    for i in range(shuffle_val // 6, 3):
+        funcs[i] = funcs[i + 1]
+
+    # Second function call
+    funcs[(shuffle_val // 2) % 3](data[12:24])
+
+    # Remove the called function and shift others left
+    for i in range((shuffle_val // 2) % 3, 2):
+        funcs[i] = funcs[i + 1]
+
+    # Third and fourth function calls
+    funcs[shuffle_val % 2](data[24:36])
+    funcs[1 - (shuffle_val % 2)](data[36:48])
+
+    self.status = status
+    self.level = level
+    self.mail_id = mail_id
+    self.current_hp = current_hp
+    self.total_hp = total_hp
+    self.attack = attack
+    self.defense = defense
+    self.speed = speed
+    self.special_attack = special_attack
+    self.special_defense = special_defense
+  
+  def read_growth(self, data):
+    self.species = int.from_bytes(data[0:2], "little")
+    self.item = int.from_bytes(data[2:4], "little")
+    self.exp = int.from_bytes(data[4:8], "little")
+    self.pp = data[8]
+    self.friendship = data[9]
+    self._unused = int.from_bytes(data[10:12], "little")
+
+  def read_moves(self, data):
+    print("moves")
+
+  def read_evs(self, data):
+    print("evs")
+
+  def read_misc(self, data):
+    print("misc")
   
   @classmethod
   def unpack(cls, data):
-    personality_value, original_trainer_id = struct.unpack('<2I', data[0:8])
-    nickname = readstring(struct.unpack('<10B',data[8:18]))
-    return cls(personality_value, original_trainer_id, nickname)
+    personality_value, original_trainer_id = struct.unpack('<2I', data[0x0:0x8])
+    nickname = readstring(struct.unpack('<10B',data[0x8:0x12]))
+    language, flags = struct.unpack('<2B', data[0x12:0x14])
+    ot_name = readstring(struct.unpack('<7B', data[0x14:0x1B]))
+    markings = struct.unpack('<B', data[0x1B:0x1C])[0]
+    checksum = struct.unpack('<H', data[0x1C:0x1E])[0]
+    if personality_value == 0:
+      return cls(0, 0, "", 0, "", 0, 0, data[0x20:0x50], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    if len(data[0x50:0x64]) == 14:
+      status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense = struct.unpack('<I2B7H', data[0x50:0x64])
+    else:
+      status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    #offset = 36
+    #species, item, exp, pp, friendship, _unused  = struct.unpack('<HHIBBH', data[32+offset:44+offset])
+    return cls(personality_value, original_trainer_id, nickname, language, ot_name, markings, checksum, data[0x20:0x50], status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense)
   
   def __str__(self):
-    return f'<Pokemon personality_value={self.personality_value} ot={self.original_trainer_id} nickname={self.nickname}>'
+    return ', '.join(f'{key}={value}' for key, value in vars(self).items())
+    return f'<Pokemon personality_value={self.personality_value} ot={self.original_trainer_id} nickname={self.nickname} ot_name={self.ot_name} species={self.species}>'
   
 class BaseStruct:
   @staticmethod
