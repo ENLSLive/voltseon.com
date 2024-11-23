@@ -58,6 +58,34 @@ SPECIES_MAP = [
   383, 384, 380, 381, 385, 386, 358
 ]
 
+NATURES = [
+  "Hardy",
+  "Lonely",
+  "Brave",
+  "Adamant",
+  "Naughty",
+  "Bold",
+  "Docile",
+  "Relaxed",
+  "Impish",
+  "Lax",
+  "Timid",
+  "Hasty",
+  "Serious",
+  "Jolly",
+  "Naive",
+  "Modest",
+  "Mild",
+  "Quiet",
+  "Bashful",
+  "Rash",
+  "Calm",
+  "Gentle",
+  "Sassy",
+  "Careful",
+  "Quirky"
+]
+
 def get_species(index):
   """Returns the species ID for a given index."""
   if 0 <= index < len(SPECIES_MAP):

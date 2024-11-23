@@ -85,20 +85,20 @@ class PokemonBoxData:
     return box_names
   
   def get_all_pokemon(self):
-    pokemon = ""
+    pokemon = "{"
     for i, mon in enumerate(self.pokemon_data):
-      if mon is not None and mon.nickname is not None and mon.nickname != "" and mon.personality_value != 0:
-        pokemon += f'Pokemon {i}: {mon}\n'
-    return pokemon
+      if mon is not None and mon.personality_value != "":
+        pokemon += f'{i}: {{{mon}}},\n'
+    return pokemon + "}"
   
   def __str__(self):
     return f'<PokemonBoxData current_box={self.current_box} pokemon_data={self.get_all_pokemon()} box_names={self.get_all_box_names()} box_wallpapers={len(self.box_wallpapers)}>'
   
 class Pokemon:
-  def __init__(self, personality_value, original_trainer_id, nickname, language, ot_name, markings, checksum, org_data, status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense):
+  def __init__(self, personality_value, trainer_id, nickname, language, ot_name, markings, checksum, org_data, status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense):
     self.personality_value = to_hex(personality_value)
-    self.secret_id, self.original_trainer_id = split_bits(original_trainer_id)
-    key = personality_value ^ self.original_trainer_id ^ (self.secret_id << 16)
+    self.secret_id, self.trainer_id = split_bits(trainer_id)
+    key = personality_value ^ self.trainer_id ^ (self.secret_id << 16)
     self.nickname = nickname
     self.language = language
     self.ot_name = ot_name
@@ -148,6 +148,9 @@ class Pokemon:
     self.speed = speed
     self.special_attack = special_attack
     self.special_defense = special_defense
+
+    self.shiny = ((personality_value >> 16) ^ (personality_value & 0xFFFF) ^ self.trainer_id ^ self.secret_id) < 8
+    self.nature = NATURES[personality_value % 25]
   
   def read_growth(self, data):
     self.species = int.from_bytes(data[0:2], "little")
@@ -170,13 +173,35 @@ class Pokemon:
   def read_misc(self, data):
     self.pokerus = data[0]
     self.met_location = data[1]
-    self.origin = int.from_bytes(data[2:4], "little")
-    self.iv_egg_ability = int.from_bytes(data[4:8], "little")
+    stuff = int.from_bytes(data[2:4], "little")
+    self.level_met = stuff & 0x7F
+    self.game_met = (stuff >> 7) & 0x0F
+    self.ball = (stuff >> 11) & 0x0F
+    self.ot_gender = stuff >> 15
+    self.extract_values(int.from_bytes(data[4:8], "little"))
     self.ribbons_obedience = int.from_bytes(data[8:12], "little")
+  
+  def extract_values(self, x):
+    # Extract HP (bits 0-4)
+    self.hp = x & 0x1F  # 0x1F is the mask for the lower 5 bits
+    # Extract Attack (bits 5-9)
+    self.attack = (x >> 5) & 0x1F  # Shift right by 5 bits, mask the lower 5 bits
+    # Extract Defense (bits 10-14)
+    self.defense = (x >> 10) & 0x1F  # Shift right by 10 bits, mask the lower 5 bits
+    # Extract Speed (bits 15-19)
+    self.speed = (x >> 15) & 0x1F  # Shift right by 15 bits, mask the lower 5 bits
+    # Extract Special Attack (bits 20-24)
+    self.special_attack = (x >> 20) & 0x1F  # Shift right by 20 bits, mask the lower 5 bits
+    # Extract Special Defense (bits 25-29)
+    self.special_defense = (x >> 25) & 0x1F  # Shift right by 25 bits, mask the lower 5 bits
+    # Extract Egg? (bit 30)
+    self.egg = (x >> 30) & 0x01  # Shift right by 30 bits, mask the lower 1 bit
+    # Extract Ability (bit 31)
+    self.ability = (x >> 31) & 0x01  # Shift right by 31 bits, mask the lower 1 bit
   
   @classmethod
   def unpack(cls, data):
-    personality_value, original_trainer_id = struct.unpack('<2I', data[0x0:0x8])
+    personality_value, trainer_id = struct.unpack('<2I', data[0x0:0x8])
     nickname = readstring(struct.unpack('<10B',data[0x8:0x12]))
     language, flags = struct.unpack('<2B', data[0x12:0x14])
     ot_name = readstring(struct.unpack('<7B', data[0x14:0x1B]))
@@ -190,11 +215,11 @@ class Pokemon:
       status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     #offset = 36
     #species, item, exp, pp, friendship, _unused  = struct.unpack('<HHIBBH', data[32+offset:44+offset])
-    return cls(personality_value, original_trainer_id, nickname, language, ot_name, markings, checksum, data[0x20:0x50], status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense)
+    return cls(personality_value, trainer_id, nickname, language, ot_name, markings, checksum, data[0x20:0x50], status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense)
   
   def __str__(self):
-    return ', '.join(f'{key}={value}' for key, value in vars(self).items())
-    return f'<Pokemon personality_value={self.personality_value} ot={self.original_trainer_id} nickname={self.nickname} ot_name={self.ot_name} species={self.species}>'
+    return '\t'.join(f'{key}: {"\"" if isinstance(value, str) else ""}{value}{"\"" if isinstance(value, str) else ""},\n' for key, value in vars(self).items())
+    return f'<Pokemon personality_value={self.personality_value} ot={self.trainer_id} nickname={self.nickname} ot_name={self.ot_name} species={self.species}>'
   
 class BaseStruct:
   @staticmethod

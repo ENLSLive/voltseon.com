@@ -77,9 +77,7 @@ def unpack_save(save_path):
   boxes = PokemonBoxData.unpack(box_data)
 
   # Print the box data
-  for i in boxes.pokemon_data:
-    if i.personality_value is not "":
-      print(i)
+  print(boxes.get_all_pokemon())
 
 def main():
   unpack_save(SAVE_FILE)
