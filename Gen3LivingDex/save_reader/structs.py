@@ -85,11 +85,11 @@ class PokemonBoxData:
     return box_names
   
   def get_all_pokemon(self):
-    pokemon = "{"
+    pokemon = "{\n"
     for i, mon in enumerate(self.pokemon_data):
       if mon is not None and mon.personality_value != "":
-        pokemon += f'{i}: {{{mon}}},\n'
-    return pokemon + "}"
+        pokemon += f'\t\"{i}\": {{\n\t\t{mon}\t}},\n'
+    return pokemon.removesuffix(",\n") + "\n}"
   
   def __str__(self):
     return f'<PokemonBoxData current_box={self.current_box} pokemon_data={self.get_all_pokemon()} box_names={self.get_all_box_names()} box_wallpapers={len(self.box_wallpapers)}>'
@@ -154,7 +154,7 @@ class Pokemon:
   
   def read_growth(self, data):
     self.species = int.from_bytes(data[0:2], "little")
-    self.species = self.species
+    self.species = get_species(self.species)
     self.item = int.from_bytes(data[2:4], "little")
     self.exp = int.from_bytes(data[4:8], "little")
     self.pp = data[8]
@@ -218,7 +218,7 @@ class Pokemon:
     return cls(personality_value, trainer_id, nickname, language, ot_name, markings, checksum, data[0x20:0x50], status, level, mail_id, current_hp, total_hp, attack, defense, speed, special_attack, special_defense)
   
   def __str__(self):
-    return '\t'.join(f'{key}: {"\"" if isinstance(value, str) else ""}{value}{"\"" if isinstance(value, str) else ""},\n' for key, value in vars(self).items())
+    return '\t\t'.join(f'\"{key}\": {"\"" if isinstance(value, str) else ""}{("true" if value else "false") if isinstance(value, bool) else value}{"\"" if isinstance(value, str) else ""},\n' for key, value in vars(self).items()).removesuffix(',\n') + '\n'
     return f'<Pokemon personality_value={self.personality_value} ot={self.trainer_id} nickname={self.nickname} ot_name={self.ot_name} species={self.species}>'
   
 class BaseStruct:

@@ -76,8 +76,10 @@ def unpack_save(save_path):
   # Unpack the box data
   boxes = PokemonBoxData.unpack(box_data)
 
-  # Print the box data
-  print(boxes.get_all_pokemon())
+  # Write the box data
+  f = open("dex.json", "w")
+  f.write(boxes.get_all_pokemon())
+  f.close()
 
 def main():
   unpack_save(SAVE_FILE)
