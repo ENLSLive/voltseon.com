@@ -9,7 +9,7 @@ import os
 # https://calculator.name/baseconvert/decimal/hexadecimal
 
 # Constants
-SAVE_FILE = "test2.gci"
+SAVE_FILE = "01-GPXP-pokemon_rs_memory_box.gci"
 SAVE_SIZE = 0x76000
 GCI_OFFSET = 0x40
 
@@ -57,14 +57,15 @@ def unpack_save(save_path):
   box_data = b''
 
   # Append the actual data of each save slot to the box data
-  for i in range(0, 23):
+  for i in range(22):
     box_data += used_slots[i].actual_data
 
   # Unpack the box data
   boxes = PokemonBoxData.unpack(box_data)
 
   # Print the box data
-  print(boxes)
+  for i in boxes.pokemon_data:
+    print(i)
 
 def main():
   unpack_save(SAVE_FILE)

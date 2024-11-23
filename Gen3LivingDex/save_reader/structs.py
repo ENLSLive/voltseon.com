@@ -37,7 +37,7 @@ class DataStructure:
   @classmethod
   def unpack(cls, data):
     checksum_a, checksum_b, block_id, save_count = struct.unpack('>HHII', data[:0xC])
-    actual_data = data[0xC:0x1FFB]
+    actual_data = data[0xC:0x1FFC]
     footer = struct.unpack('>I', data[0x1FFC:])
     return cls(data, checksum_a, checksum_b, block_id, save_count, actual_data, footer)
   
@@ -63,7 +63,7 @@ class PokemonBoxData:
     # Unpack box names
     box_names = []
     for i in range(0x1EC38, 0x1ED19, 9):
-      box_names.append(readstring(data[i:i+9] & 0xFF))
+      box_names.append(readstring(struct.unpack('<9B',data[i:i+9])))
 
     # Unpack box wallpapers
     box_wallpapers = list(data[0x1ED19:])
@@ -101,7 +101,6 @@ class Pokemon:
     personality_value, original_trainer_id = struct.unpack('<2I', data[0:8])
     nickname = readstring(struct.unpack('<10B',data[8:18]))
     return cls(personality_value, original_trainer_id, nickname)
-
   
   def __str__(self):
     return f'<Pokemon personality_value={self.personality_value} ot={self.original_trainer_id} nickname={self.nickname}>'
