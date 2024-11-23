@@ -25,16 +25,18 @@ class DataStructure:
     self.calculate_checksums()
 
   def calculate_checksums(self):
-    checksum = ((self.block_id & 0xFFFF) + ((self.block_id >> 0x10) & 0xFFFF) + (self.save_count & 0xFFFF) + ((self.save_count >> 0x10) & 0xFFFF))
+    checksum = ((self.block_id & 0xFFFF) + (self.block_id >> 0x10) + (self.save_count & 0xFFFF) + (self.save_count >> 0x10))
 
-    for i in range(0xC, 0x1FFC, 2):
-      word = (self.raw_data[i] << 0x8) + self.raw_data[i + 1]
+    data = self.actual_data
+
+    for i in range(0, len(data), 2):
+      word = (data[i] << 8) + data[i + 1]
       checksum += word
 
-    self.checksum_a = checksum & 0xFFFF
-    self.checksum_b = 0xF004 - (checksum & 0xFFFF)
+    calculated_checksum_a = checksum & 0xFFFF
+    calculated_checksum_b = (0xF004 - checksum) & 0xFFFF
 
-    self.valid = (checksum == self.checksum_a) and ((0xF004 - checksum) == self.checksum_b)
+    self.valid = (calculated_checksum_a == self.checksum_a) and (calculated_checksum_b == self.checksum_b)
 
   @classmethod
   def unpack(cls, data):
@@ -149,6 +151,7 @@ class Pokemon:
   
   def read_growth(self, data):
     self.species = int.from_bytes(data[0:2], "little")
+    self.species = self.species
     self.item = int.from_bytes(data[2:4], "little")
     self.exp = int.from_bytes(data[4:8], "little")
     self.pp = data[8]
@@ -156,13 +159,20 @@ class Pokemon:
     self._unused = int.from_bytes(data[10:12], "little")
 
   def read_moves(self, data):
-    print("moves")
-
+    self.moves = []
+    for i in range(4):
+      self.moves.append([int.from_bytes(data[i*2:i*2+2], "little"), int.from_bytes(data[i+8:i+9], "little")])
+  
   def read_evs(self, data):
-    print("evs")
+    self.evs = list(data[0:6])
+    self.contest_stats = list(data[6:12])
 
   def read_misc(self, data):
-    print("misc")
+    self.pokerus = data[0]
+    self.met_location = data[1]
+    self.origin = int.from_bytes(data[2:4], "little")
+    self.iv_egg_ability = int.from_bytes(data[4:8], "little")
+    self.ribbons_obedience = int.from_bytes(data[8:12], "little")
   
   @classmethod
   def unpack(cls, data):

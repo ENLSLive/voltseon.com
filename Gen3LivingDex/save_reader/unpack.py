@@ -32,20 +32,19 @@ def unpack_save(save_path):
   for i in range(58):
     save_block = DataStructure.unpack(save_data[0x02000 + (0x2000 * i):0x02000 + (0x2000 * (i+1))])
     save_slots.append(save_block)
-    #print(save_block.save_count)
 
   # Decide which save slot to use
-  valid_a = False
+  valid_a = True
   valid_b = True
 
   save_count_a = save_slots[0].save_count
   save_count_b = save_slots[23].save_count
   
-  #for i in range(23):
-  #  if (not save_slots[i].valid) or (save_slots[i].save_count != save_count_a):
-  #    valid_a = False
-  #  if (not save_slots[i+23].valid) or (save_slots[i+23].save_count != save_count_b):
-  #    valid_b = False
+  for i in range(23):
+    if (not save_slots[i].valid) or (save_slots[i].save_count != save_count_a):
+      valid_a = False
+    if (not save_slots[i+23].valid) or (save_slots[i+23].save_count != save_count_b):
+      valid_b = False
 
   print(f"Save count A: {save_count_a}")
   print(f"Save count B: {save_count_b}")
