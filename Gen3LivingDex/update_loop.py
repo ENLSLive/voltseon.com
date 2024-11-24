@@ -24,7 +24,7 @@ def set_gifs_to_loop_once(folder_path):
                 # Open the GIF
                 with Image.open(input_path) as img:
                     # Save the GIF with loop=0 (no looping)
-                    img.save(output_path, save_all=True, loop=1)
+                    img.save(output_path, save_all=True, loop=None, disposal=2)
                     print(f"Processed: {filename} -> Loops set to 1")
             except Exception as e:
                 print(f"Failed to process {filename}: {e}")
