@@ -183,7 +183,7 @@ class Pokemon:
     self.item = int.from_bytes(data[2:4], "little")
     self.item_name = ITEMS[self.item]
     self.exp = int.from_bytes(data[4:8], "little")
-    self.pp_bonuses = [(data[8] >> 6) & 0b11, (data[8] >> 4) & 0b11, (data[8] >> 2) & 0b11, data[8] & 0b11]
+    self.pp_bonuses = [data[8] & 0b11, (data[8] >> 2) & 0b11, (data[8] >> 4) & 0b11, (data[8] >> 6) & 0b11]
     self.friendship = data[9]
     self._unused = int.from_bytes(data[10:12], "little")
 
@@ -199,8 +199,8 @@ class Pokemon:
   def read_misc(self, data):
     self.has_pokerus = data[0] > 0
     if (self.has_pokerus):
-      self.pokerus_days = (data[0] >> 4) & 0b1111
-      self.pokerus_strain = data[0] & 0b1111
+      self.pokerus_days = data[0] & 0b1111
+      self.pokerus_strain = (data[0] >> 4) & 0b1111
       self.cured = self.pokerus_days == 0 and self.pokerus_strain > 0
     stuff = int.from_bytes(data[2:4], "little")
     self.level_met = stuff & 0x7F
