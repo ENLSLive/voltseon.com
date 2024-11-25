@@ -2256,6 +2256,37 @@ STATS = [
   [50,150,50,150,150,50]
 ]
 
+LANG = [
+  "???",
+  "Japanese",
+  "English",
+  "French",
+  "Italian",
+  "German",
+  "unused",
+  "Spanish",
+]
+
+TYPES = [
+  "Normal",
+  "Fighting",
+  "Flying",
+  "Poison",
+  "Ground",
+  "Rock",
+  "Bug",
+  "Ghost",
+  "Steel",
+  "Fire",
+  "Water",
+  "Grass",
+  "Electric",
+  "Psychic",
+  "Ice",
+  "Dragon",
+  "Dark"
+]
+
 ABILITIES = [
   "-",
   "Stench",
