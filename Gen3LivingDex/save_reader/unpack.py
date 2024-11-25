@@ -10,7 +10,7 @@ from personal import *
 # https://calculator.name/baseconvert/decimal/hexadecimal
 
 # Constants
-SAVE_FILE = "01-GPXP-pokemon_rs_memory_box.gci"
+SAVE_FILE = "save.gci"
 SAVE_SIZE = 0x76000
 GCI_OFFSET = 0x40
 

@@ -175,6 +175,9 @@ class Pokemon:
     self.get_gender()
     self.get_stats()
     self.get_hidden_power()
+    if self.species == 201:
+      unown_check = ((self.pid & 0x3000000) >> 18) | ((self.pid & 0x30000) >> 12) | ((self.pid & 0x300) >> 6) | (self.pid & 0x3)
+      self.unown_form = UNOWN[unown_check % 28]
     for i in range(4):
       self.moves[i][1] = math.floor(self.moves[i][1] * (1 + self.pp_bonuses[i] * 0.2))
   
