@@ -223,6 +223,7 @@ class Pokemon:
     for i, name in enumerate(["Champion", "Winning", "Victory", "Artist", "Effort", "Marine", "Land", "Sky", "Country", "National", "Earth", "World"]):
       if (ribbons_obedience >> (15 + i)) & 1 == 1:
         self.ribbons.append(f"{name} Ribbon")
+    self.fateful_encounter = (ribbons_obedience >> 31) & 1 == 1
   
   def get_hidden_power(self):
     lsbsum = 0
