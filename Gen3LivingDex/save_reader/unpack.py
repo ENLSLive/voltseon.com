@@ -1,6 +1,7 @@
 from structs import *
 import struct
 import os
+from personal import *
 
 # https://projectpokemon.org/home/forums/topic/37630-pokemon-box-ramps-save-file-structure-research-research-complete/
 # https://github.com/VitHuang/PokemonBoxSaveEditor/blob/054e9878a89fb385e9b8aaf72256107a4f758981/PokemonBoxRSSaveEditor/mainwindow.cpp
@@ -77,7 +78,7 @@ def unpack_save(save_path):
   boxes = PokemonBoxData.unpack(box_data)
 
   # Write the box data
-  f = open("dex.json", "w")
+  f = open("dex.json", "w", encoding='utf-8')
   f.write(boxes.get_all_pokemon())
   f.close()
 
