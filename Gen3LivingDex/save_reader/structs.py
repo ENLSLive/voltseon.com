@@ -165,9 +165,10 @@ class Pokemon:
       if (self.exp < EXPERIENCE[i * 6 + self.growth_rate]):
           self.level = i
           break
-    levelexp = EXPERIENCE[self.level * 6 + self.growth_rate]
-    self.exp_percentage = round(self.exp / levelexp, 3) * 100
-    self.exp_to_next_level = levelexp - self.exp
+    if self.level < 100:
+      levelexp = EXPERIENCE[self.level * 6 + self.growth_rate]
+      self.exp_percentage = round(self.exp / levelexp, 3) * 100
+      self.exp_to_next_level = levelexp - self.exp
     self.ability_name = ABILITIES[get_abilities(self.species)[self.ability]]
     types = get_types(self.species)
     self.types = [TYPES[types[0]], TYPES[types[1]]]
