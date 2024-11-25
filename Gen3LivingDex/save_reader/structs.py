@@ -216,12 +216,12 @@ class Pokemon:
     ribbons_obedience = int.from_bytes(data[8:12], "little")
     self.ribbons = []
     for i, name in enumerate(["Cool", "Beauty", "Cute", "Smart", "Tough"]):
-      ribbon = (ribbons_obedience >> i * 3) & 0b111
+      ribbon = (ribbons_obedience >> (i * 3)) & 0b111
       if ribbon == 0:
         continue
-      self.ribbons.append(f"{["", "", "Super ", "Hyper ", "Master ", "Unknown ", "Unknown "][i]}{name} Ribbon")
+      self.ribbons.append(f"{["", "", "Super ", "Hyper ", "Master ", "Unknown ", "Unknown "][ribbon]}{name} Ribbon")
     for i, name in enumerate(["Champion", "Winning", "Victory", "Artist", "Effort", "Marine", "Land", "Sky", "Country", "National", "Earth", "World"]):
-      if (ribbons_obedience >> (16 + i)) & 1 == 1:
+      if (ribbons_obedience >> (15 + i)) & 1 == 1:
         self.ribbons.append(f"{name} Ribbon")
   
   def get_hidden_power(self):
