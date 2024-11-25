@@ -39,7 +39,7 @@ async function downloadGifs() {
     fs.mkdirSync(outputDir, { recursive: true }); // Ensure the output directory exists
 
     for (const num of numbers) {
-        const url = `https://www.pokencyclopedia.info/sprites/menu-icons/ico-a_old/ico-a_old_201-${num}.gif`; // Replace with your URL template
+        const url = `https://www.pokencyclopedia.info/sprites/gen3/ani_emerald/ani_e_201-${num}.gif`; // Replace with your URL template
         const dest = path.join(outputDir, `201-${num}.gif`);
 
         try {
