@@ -2780,7 +2780,7 @@ UNOWN = [
 
 # Name, Type, Category, PP, Power, Accuracy, Gen
 MOVE_DATA = [
-  ["---", "???", "???", "---", "---", "---%", "I"],
+  ["---", "???", "???", "0", "---", "---%", "I"],
   ["Pound","Normal","Physical","35","40","100%","I"],
   ["Karate Chop","Fighting","Physical","25","50","100%","I"],
   ["Double Slap","Normal","Physical","10","15","85%","I"],
