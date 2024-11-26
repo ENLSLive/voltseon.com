@@ -11,7 +11,7 @@ def set_gifs_to_loop_once(folder_path):
         return
 
     # Create an output folder for modified GIFs
-    output_folder = folder_path
+    output_folder = os.path.join(folder_path, "modified")
     os.makedirs(output_folder, exist_ok=True)
 
     # Process each file in the folder
