@@ -180,6 +180,8 @@ class Pokemon:
       self.unown_form = UNOWN[unown_check % 28]
     for i in range(4):
       self.moves[i][1] = math.floor(self.moves[i][1] * (1 + self.pp_bonuses[i] * 0.2))
+      if self.moves[i][2] != "---":
+        self.moves[i][2] = math.floor(int(self.moves[i][2]) * (1 + self.pp_bonuses[i] * 0.2))
   
   def read_growth(self, data):
     self.species = int.from_bytes(data[0:2], "little")
@@ -194,7 +196,9 @@ class Pokemon:
   def read_moves(self, data):
     self.moves = []
     for i in range(4):
-      self.moves.append([MOVES[int.from_bytes(data[i*2:i*2+2], "little")], int.from_bytes(data[i+8:i+9], "little")])
+      moveindex = int.from_bytes(data[i*2:i*2+2], "little")
+      move_data = MOVE_DATA[moveindex]
+      self.moves.append([move_data[0], int.from_bytes(data[i+8:i+9], "little"), move_data[3], move_data[1], move_data[2], move_data[4], move_data[5]])
   
   def read_evs(self, data):
     self.evs = list(data[0:6])
