@@ -112,6 +112,14 @@ class Pokemon:
     self.markings = MARK_TABLE[markings]
     self.checksum = checksum
     
+    if not self.has_species:
+      nickcheck = nickname.capitalize()
+      if nickcheck in SPECIES:
+        self.species = SPECIES.index(nickcheck)
+      else:
+        self.personality_value = 0
+        return
+    
     if personality_value == 0:
       return
 
@@ -184,8 +192,9 @@ class Pokemon:
         self.moves[i][2] = math.floor(int(self.moves[i][2]) * (1 + self.pp_bonuses[i] * 0.2))
   
   def read_growth(self, data):
-    self.species = int.from_bytes(data[0:2], "little")
-    self.species = get_species(self.species)
+    if not self.species:
+      self.species = int.from_bytes(data[0:2], "little")
+      self.species = get_species(self.species)
     self.item = int.from_bytes(data[2:4], "little")
     self.item_name = ITEMS[self.item]
     self.exp = int.from_bytes(data[4:8], "little")
