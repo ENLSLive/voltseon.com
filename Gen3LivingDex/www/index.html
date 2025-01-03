@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Living Dex</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container" id="container">
+    <div class="summaryPanel" id="summaryPanel">
+      <div id="summaryTop">
+        <span class="close" id="summaryClose">&times;</span>
+        <img id="pkmndatatext" src="/assets/img/pkmndatatext.webp">
+        <div id="summarySprite">
+          <img id="summaryImg" src="/assets/img/pokemon/anim/1.gif" alt="Sprite">
+          <img id="summaryShinySparkle" src="" alt="Shiny Sparkle">
+        </div>
+        <div id="shinyStar"><img src="/assets/img/shiny.png"></div>
+      </div>
+      <div id="summaryBottom">
+        <div style="display: flex; justify-content: center; align-items: center;"><div id="summaryLevel">Lv. 1</div><div id="summaryName">------</div><span id="summaryGender"></span></div>
+        <div id="summaryTypes" style="display: flex;">
+          <div id="type1" class="type"><img src="/assets/img/types/QMarks.webp"></div>
+          <div id="type2" class="type"><img src="/assets/img/types/QMarks.webp"></div>
+        </div>
+      </div>
+      <div id="summaryBottom">
+        <div id="summaryMisc">
+          <div id="summaryHeldItem">
+            <div id="heldItem"><img src="/assets/img/items/back.png"></div>
+            <div id="heldItemName">---</div>
+          </div>
+          <div id="summaryAbility">
+            <span>Ability:</span>
+            <div id="abilityName">---</div>
+          </div>
+        </div>
+        <div id="summaryStats">
+          <span id="summaryStatLabel">HP</span><span id="summaryStat--HP">0</span>
+          <span id="summaryStatLabel">SP. ATK</span><span id="summaryStat--SPATK">0</span>
+          <span id="summaryStatLabel">ATK</span><span id="summaryStat--ATK">0</span>
+          <span id="summaryStatLabel">SP. DEF</span><span id="summaryStat--SPDEF">0</span>
+          <span id="summaryStatLabel">DEF</span><span id="summaryStat--DEF">0</span>
+          <span id="summaryStatLabel">SPEED</span><span id="summaryStat--SPEED">0</span>
+        </div>
+        <div id="summaryNature">
+          <div id="nature">--- nature</div>
+        </div>
+      </div>
+      <div id="summaryBottom">
+        <div id="summaryMoves">
+          <div id="summaryMove1" class="summaryMove"><div><div style='width: 64px;'></div><span>-</span></div><span>--</span></div>
+          <div id="summaryMove2" class="summaryMove"><div><div style='width: 64px;'></div><span>-</span></div><span>--</span></div>
+          <div id="summaryMove3" class="summaryMove"><div><div style='width: 64px;'></div><span>-</span></div><span>--</span></div>
+          <div id="summaryMove4" class="summaryMove"><div><div style='width: 64px;'></div><span>-</span></div><span>--</span></div>
+        </div>
+        <div class="summaryEvIvWrapper">
+          <div class="hexagon">
+            <div class="hexagon-grid">
+            </div>
+            <div class="summaryEvIv" id="summaryEvIv"></div>
+          </div>
+  
+          <span class="summaryEvIvLabel" id="hp">HP</span>
+          <span class="summaryEvIvLabel" id="attack">Attack</span>
+          <span class="summaryEvIvLabel" id="defense">Defense</span>
+          <span class="summaryEvIvLabel" id="special-attack">Sp. Atk</span>
+          <span class="summaryEvIvLabel" id="special-defense">Sp. Def</span>
+          <span class="summaryEvIvLabel" id="speed">Speed</span>
+          <span class="summaryEvIvLabel" id="currentIvEv">IV's</span>
+      </div>
+  
+      <button class="toggleButton" onclick="toggleView()">Toggle IV/EV</button>
+      </div>
+    </div>
+    <div id="gridPanelParentParent">
+      <div id="gridPanelParent">
+        <div class="gridPanel" id="gridPanel">
+          <div id="headerBar">
+            <input type="text" id="searchBar" placeholder="Search...">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <button id="openModalBtn">Open Modal</button> -->
+  </div>
+</body>
+<script src="grid.js"></script>
+<script src="modal.js"></script>
+<script src="summary.js"></script>
+</html>
