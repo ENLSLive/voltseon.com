@@ -16,12 +16,12 @@
 
 @font-face {
     font-family: "PowerClear";
-    src: url("/assets/fonts/power clear.ttf") format("truetype");
+    src: url("/Gen3LivingDex/www/assets/fonts/power clear.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "PowerGreen";
-    src: url("/assets/fonts/power green.ttf") format("truetype");
+    src: url("/Gen3LivingDex/www/assets/fonts/power green.ttf") format("truetype");
 }
 
 

@@ -66,11 +66,11 @@ function updatePokemonInfoPanel(pokemon, audio = true) {
     document.getElementById("shinyStar").style.display = "none";
   }
   if (pokemon.types.length === 1 || pokemon.types[1] === pokemon.types[0]) {
-    type1.innerHTML = `<img src="/assets/img/types/${pokemon.types[0]}.webp">`;
+    type1.innerHTML = `<img src="/Gen3LivingDex/www/assets/img/types/${pokemon.types[0]}.webp">`;
     type2.innerHTML = '';
   } else {
-    type1.innerHTML = `<img src="/assets/img/types/${pokemon.types[0]}.webp">`;
-    type2.innerHTML = `<img src="/assets/img/types/${pokemon.types[1]}.webp">`;
+    type1.innerHTML = `<img src="/Gen3LivingDex/www/assets/img/types/${pokemon.types[0]}.webp">`;
+    type2.innerHTML = `<img src="/Gen3LivingDex/www/assets/img/types/${pokemon.types[1]}.webp">`;
   }
   setStats(pokemon);
   setAbility(pokemon.ability_name);
@@ -177,7 +177,7 @@ function setMoves(moves) {
       const maxPp = move[2];
       const ppLeft = Math.min(move[1], maxPp);
 
-      document.getElementById(`summaryMove${i + 1}`).innerHTML = `<div><img src="/assets/img/types/${moveType}.webp"><span>${moveName}</span></div><span>${ppLeft}/${maxPp}</span>`;
+      document.getElementById(`summaryMove${i + 1}`).innerHTML = `<div><img src="/Gen3LivingDex/www/assets/img/types/${moveType}.webp"><span>${moveName}</span></div><span>${ppLeft}/${maxPp}</span>`;
     }
     else {
       clearMove(i);
@@ -203,7 +203,7 @@ function playCry(pokemon) {
 
 function playShinySparkle() {
   const sparkleGif = document.getElementById("summaryShinySparkle");
-  sparkleGif.src = "/assets/img/shiny_sparkle.gif"
+  sparkleGif.src = "/Gen3LivingDex/www/assets/img/shiny_sparkle.gif"
   sparkleGif.style.display = "flex";
 
   const sparkleSound = new Audio(`assets/cries/shiny_sparkle.ogg`);
