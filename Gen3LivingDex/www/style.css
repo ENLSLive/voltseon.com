@@ -56,7 +56,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    background: url(/assets/img/bg_blue.webp) repeat center;
+    background: url(/Gen3LivingDex/www/assets/img/bg_blue.webp) repeat center;
     background-attachment: fixed;
     image-rendering: pixelated;
     overflow: auto;
@@ -74,7 +74,7 @@ body {
 
 .gridPanel {
     padding: 0 1rem;
-    background: url(/assets/img/boxbg_1.webp) repeat center;
+    background: url(/Gen3LivingDex/www/assets/img/boxbg_1.webp) repeat center;
     width: fit-content;
     height: fit-content;
     border-top: 0.5rem solid var(--border-tl-1);
@@ -104,7 +104,7 @@ body {
 }
 
 #gridBg {
-    background: url(/assets/img/boxbg_1.webp) repeat center;
+    background: url(/Gen3LivingDex/www/assets/img/boxbg_1.webp) repeat center;
     width: fit-content;
     height: fit-content;
     margin-top: 60px;
@@ -217,7 +217,7 @@ body {
     width: 216px;
     height: 216px;
     margin: 0 auto;
-    background: url(/assets/img/summarySpriteBG.webp) no-repeat center;
+    background: url(/Gen3LivingDex/www/assets/img/summarySpriteBG.webp) no-repeat center;
     border-left: 0.5rem solid #4F4F57;
     border-top: 0.5rem solid #4F4F57;
     border-right: 0.5rem solid #9F9FAF;

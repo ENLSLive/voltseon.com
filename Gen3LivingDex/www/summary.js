@@ -105,7 +105,7 @@ function setHeldItem(item) {
   }
   heldItem.firstChild.style.display = "flex";
   heldItemName.textContent = item;
-  heldItem.firstChild.src = `/assets/img/items/${getItemId(item)}.png`;
+  heldItem.firstChild.src = `/Gen3LivingDex/www/assets/img/items/${getItemId(item)}.png`;
 }
 
 function getItemId(item) {
