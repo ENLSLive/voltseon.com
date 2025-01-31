@@ -1,4 +1,4 @@
-fetch("Gen3LivingDex/www/data/dex.json")
+fetch("data/dex.json")
   .then(response => response.json())
   .then(data => {
     initPokemonGrid(data);
